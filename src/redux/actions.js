@@ -1,151 +1,91 @@
-import fetch from 'isomorphic-fetch';
+import * as ajaxUtil from '../util/ajaxUtil';
+import { makeActionCreator } from '../util/actionUtil';
 
 /*
  * action types 
  */
+export const AJAX_IN_PROGRESS = 'AJAX_IN_PROGRESS';
+export const AJAX_SUCCESS = 'AJAX_SUCCESS';
+export const AJAX_ERROR = 'AJAX_ERROR';
+
 export const REQUEST_TASKS = 'REQUEST_TASKS';
 export const RECIEVE_TASKS = 'RECIEVE_TASKS';
 export const ADD_TASK = 'ADD_TASK';
 export const DELETE_TASK = 'DELETE_TASK';
 export const UPDATE_TASK = 'UPDATE_TASK';
 
+
 /**
  * action creators
  */
-function requestTasks() {
-    return {
-        type: REQUEST_TASKS
-    };
-}
+const ajaxInProgressAction = makeActionCreator(AJAX_IN_PROGRESS);
+const ajaxSuccessAction = makeActionCreator(AJAX_SUCCESS);
+const ajaxErrorAction = makeActionCreator(AJAX_ERROR);
 
+
+const requestTasks = makeActionCreator(REQUEST_TASKS);
 function recieveTasks(json) {
-
-    console.log(json);
-
     return {
         type: RECIEVE_TASKS,
         tasks: json,
         receivedAt: Date.now()
     };
 }
+const addTaskAction = makeActionCreator(ADD_TASK, 'task');
+const deleteTaskAction = makeActionCreator(DELETE_TASK, 'task');
+const updateTaskAction = makeActionCreator(UPDATE_TASK, 'task');
 
-function addTaskDispatch(task) {
-    return {
-        type: ADD_TASK,
-        task
-    };
-}
-
-function deleteTaskDispatch(task) {
-    return {
-        type: DELETE_TASK,
-        task
-    };
-}
-
-function updateTaskDispatch(task) {
-    return {
-        type: UPDATE_TASK,
-        task
-    };
-}
 
 /**
  * Async Actions using fetch and thunk
  */
-
 export function getTasks() {
     return function (dispatch) {
-        // First dispatch: the app state is updated to inform
-        // that the API call is starting.
+        dispatch(requestTasks());
 
-        dispatch(requestTasks())
-
-        // The function called by the thunk middleware can return a value,
-        // that is passed on as the return value of the dispatch method.
-
-        // In this case, we return a promise to wait for.
-        // This is not required by thunk middleware, but it is convenient for us.
-
-        return fetch(`/api/tasks`)
-            .then(
-            response => response.json(),
-            // Do not use catch, because that will also catch
-            // any errors in the dispatch and resulting render,
-            // causing an loop of 'Unexpected batch number' errors.
-            // https://github.com/facebook/react/issues/6895
-            error => console.log('An error occured.', error)
-            )
-            .then(json =>
-                // We can dispatch many times!
-                // Here, we update the app state with the results of the API call.
-
-                dispatch(recieveTasks(json))
-            )
+        return ajaxUtil.get(`/api/tasks`).then(json =>
+            dispatch(recieveTasks(json))
+        );
     }
 }
+
+// export function getTasks() {
+//     return {
+//         types: [REQUEST_TASKS, RECIEVE_TASKS, AJAX_ERROR],
+//         callAPI: () => ajaxUtil.get(`/api/tasks`),
+//         payload: {}
+//     }
+// }
 
 export function addTask(task) {
     return function (dispatch) {
 
-        //dispatch(requestTasks())
+        dispatch(ajaxInProgressAction());
 
-        return fetch(`/api/tasks`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(task)
-        })
-            .then(
-            response => response.json(),
-            error => console.log('An error occured.', error)
-            )
-            .then(json =>
-                dispatch(addTaskDispatch(json))
-            )
+        return ajaxUtil.post(`/api/tasks`, task).then(json =>
+            dispatch(addTaskAction(json))
+        );
     }
 }
-
 
 export function updateTask(task) {
     return function (dispatch) {
 
-        //dispatch(requestTasks())
+        dispatch(ajaxInProgressAction());
 
-        return fetch(`/api/tasks/${task._id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(task)
-        })
-            .then(
-            response => response.json(),
-            error => console.log('An error occured.', error)
-            )
-            .then(json =>
-                dispatch(updateTaskDispatch(json))
-            )
+        return ajaxUtil.put(`/api/tasks/${task._id}`, task).then(json =>
+            dispatch(updateTaskAction(json))
+        );
     }
 }
 
 export function deleteTask(task) {
     return function (dispatch) {
 
-        //dispatch(requestTasks())
+        dispatch(ajaxInProgressAction());
 
-        return fetch(`/api/tasks/${task._id}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(
-            error => console.log('An error occured.', error)
-            )
-            .then(() =>
-                dispatch(deleteTaskDispatch(task))
-            )
+        return ajaxUtil.doDelete(`/api/tasks/${task._id}`).then(() =>
+            dispatch(deleteTaskAction(task))
+        );
     }
 }

@@ -8,9 +8,19 @@ import { addTask, deleteTask, updateTask, getTasks } from '../redux/actions';
 //Top level presentaitonal component
 class CrudView extends Component {
 
-    componentDidMount() {
+    loadData() {
         this.props.getTasks();
     }
+
+    componentDidMount() {
+        this.loadData();
+    }
+
+    //componentWillReceiveProps(nextProps) {
+    //if (nextProps.userId !== this.props.userId) {
+    //this.loadData();
+    //}
+    //}
 
     render() {
 
@@ -55,11 +65,8 @@ class CrudView extends Component {
 
 
 const mapStateToProps = state => {
-
-    console.log(state);
-
     return {
-        crud: state.crudReducerFront.crud
+        crud: state.crud
     }
 }
 const mapDispatchToProps = dispatch => {
