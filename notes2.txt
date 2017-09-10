@@ -1,0 +1,83 @@
+https://egghead.io/lessons/javascript-redux-simplifying-the-arrow-functions
+
+Building React Applications with Idiomatic redux
+
+1.  Simplifying teh Arrow Functions
+
+    //remove explicity return statement
+    export const addTodo = (text) => ({
+        type: 'Add_TODO',
+        id:  (nextTodoID++).toString()
+    });
+
+    const mapDispatchToProps = (dispatch) => ({
+        onTodoClick(id){
+            dispatch(toggleTodod(id))
+        }
+    });
+
+
+2.  Redux:  Supplying the Initial State 
+
+    createStore(todoApp, persistedState)
+
+3.  Persisting the state to local storage
+4.  Refactor
+5.  React Router
+    react-router
+
+
+    use browserHistory for IE 9+ for no hash sign
+
+6.  Navigating with Link
+
+7.  Filter redux state with router params
+8.  Using withRouter() to injetc the params into connected components
+
+
+    withRouter(connect(
+
+
+9.  Using mapDispatchToProps() Shorthand notation
+
+10.  Colocating Selectors with Reducers
+
+    Selectors select something from current state
+
+13.  Adding a Fake Backend
+14.  Fetching Data on Route Change
+
+    https://egghead.io/lessons/javascript-redux-fetching-data-on-route-change
+
+    call API in 
+
+    componentDidMount
+    -only uns once
+
+    use componentDidUpdate todoApp
+
+15.  Redux: Dispatching Actions with the Fetched Data
+
+16.  Redux: Wrapping dispatch() to Recognize Promises
+
+    Use async action to call API
+    Turn response into redux action.
+    configure store.dispatch to use Promises
+
+17.  Redux: The Middleware Chain
+
+18.  Redux:  Applying Redux Middleware
+
+    applyMiddleware from 'redux'
+
+    as last argument to createStore (enhanceer)
+
+    npm i --s redux-promise 
+    npm i --s redux-logger
+
+    import promise from 'redux-promise'
+    import createLogger from 'redux-logger
+
+19.  Redux: Updating the State with the Fetched Data
+
+20.  

@@ -1,0 +1,306 @@
+https://egghead.io/lessons/javascript-redux-the-single-immutable-state-tree
+
+
+1.  The Single Immutable State Tree
+    https://egghead.io/lessons/javascript-redux-the-single-immutable-state-tree
+
+    Principles
+    1.  Represent the whole state of your app as a single Object-- the state or state tree.
+
+
+2.  Describing State Changes with Actions
+
+    Principles 
+    2.  State is redundant.
+        Can't write to state tree directly.  
+        Must dispactch actions to it.
+        Actions have a type property.
+
+3.  Redux:  Pure and Impure Functions
+
+    Pure:   return value depends on args without side effects.
+            Don't modify values passed to them.
+
+    Impure:  Call DB, operate DOM, modify etc
+
+4.  The Reducer Function
+
+    Principle 3:
+    State mutations need to be described as pure function, the reducer,
+    that takes the previous state, the action, and returns the next state.
+
+    Only 1 per app.
+
+5.  Writing a Counter Reducer with Tests
+    https://egghead.io/lessons/javascript-redux-writing-a-counter-reducer-with-tests
+    
+    set the initial state
+
+    const counterReducer = (state  = 0, action) => {
+        
+        switch(action.type){
+            case 'INCREMENT':
+                return state + 1;
+            case 'DECREMENT'
+                return state - 1;
+            default:
+                return state;
+        }
+
+        return nextState;
+    }
+
+6.  Store Methods getState(), dispatch(), subscribe()
+
+    import {createStore} from 'redux';
+
+    //need to specify the reducer
+
+    const store  = createStore(counterReducer);
+
+    store.getState();  
+    store.dispatch({type: 'INCREMENT'});
+
+    const render = () => {
+        document.body.innerText = store.getState();
+    };
+
+    store.subscribe(render);
+
+    document.addEventListener('click', () => {
+        store.dispatch({type: 'INCREMENT'});
+    });
+
+7.  Implementing Store from Scratch
+
+    const createStore = (reducer) => {
+        let state;
+        let listeners = [];
+
+        const getState = () => state;
+
+        const dispactch = (action) => {
+            state = reducer(state, action);
+            listeners.forEach(listener => listener());
+        };
+
+        const subscribe = (listener) => {
+            listeners.push(listener);
+            return () => {
+                listeners = listeners.filter(l => l !== listener);
+            }
+        };
+
+        //set iniitial state with an initial action
+        dispatch({});
+
+        return { getState, dispatch, subscribe};
+    };
+
+8.  React Counter Example
+
+    Dumb counter componnet without any buisness logic
+
+    const Counter = ({value, onIncrement, onDecrement}) => (
+        <div>
+            <h1>{value}</h1>
+            <button onClick={onIncrement}>+</button>
+            <button onClick={onDecrement}>-</button>
+        </div>
+    );
+
+    const render = () => {
+        ReactDOM.render(
+            <Counter value={store.getState()}
+                onIncrement={() => 
+                    store.dispatch({type: 'INCREMENT'})
+                }
+                onDecrement={() => 
+                    store.dispatch({type: 'DECREMENT'})
+                }
+        )
+    }
+
+9.  Avoiding Array Mutations with concat(), slice(), and ..spread
+
+    https://egghead.io/lessons/javascript-redux-avoiding-array-mutations-with-concat-slice-and-spread
+    Uses expect and deep freeze - detect mutations.
+
+    add  [...array, whatever]
+    remove [..list.slice(0, index), ...list.slice(index + 1)]
+    incerement [...list.slice(0, index), list[index] + 1, ...list.slice(index + 1)]
+
+10.  Avoiding Object Mutation with Object.assign() and ...spread
+
+    toggle 
+    
+        Object.assign({}, todo, {
+            completed: !todo.completed
+        })
+
+        one of the right takes precedence
+
+        Object spread:
+        {...todo, {
+            completed: !todo.completed
+        }}
+
+11.  Writing a Todo List Reducer (Adding a Todo)
+
+    const todosReducer = (state = [], action) => {
+        switch(action.type){
+            case 'ADD_TODO':
+                return [
+                    ...state,
+                    {
+                        id: action.id,
+                        text: action.text,
+                        completed: false
+                    }
+                ];
+            default: 
+                return state;
+        }
+    };
+
+12.  Writing a Todo List Reducer (Toggling a Todo)
+
+    case 'TOGGLE_TODO':
+        return state.map(todo => {
+            if(todo.id !== action.id){
+                return todo;
+            }
+
+            return {
+                ...todo,
+                completed: !todo.completed
+            };
+        });
+
+13.  Reducer Composition with Arrays
+
+    Refactored out the switch to seperate functions.
+    Top level reducer calls other reducers.
+
+14.  Reducer Composition with Objects
+
+    Use exisintg reducer to call another.
+    Combine serveral reducers into single one to create store.
+    Helps scale between multiple devs.
+
+15.  Reducer Composition with combineReducers()
+
+    const { combineReducers } = Redux;
+
+    //correspond to state and reducers
+    //todos field managed by todos reducer
+    //results combined to single 
+    const todoApp = combineReducers({
+        todos: todos,
+        visibilityFilter: visibilityFilter
+    });
+
+    //ES6 Shorthand
+    const todoApp = combineReducers({
+        todos,
+        visibilityFilter
+    });
+
+16.  Implementing combineReducers() from Scratch
+
+
+17.  React Todo List Example (Adding a TODO)
+18.  Toggling a Todo
+19.  Filtering todos
+20.  Extracting Presentational Components
+21.  Extracting (AddTodo, Footer, FilterLink)
+22.  Extracting Container Compnents (Filter Link)
+    Parent's know too much about what children need.
+    Doesn't use them, just passes down.
+
+    Creates Link Component (renders only)
+    Creates FilterLink that reads REDUX state directly
+
+    const state = store.getState();
+
+    Rewatch
+
+23.  Extracting Container Components (VisibleTodoList, AddTodo)
+24.  Passing store down expicity
+    Every Container component 
+    Destructure
+    { store }
+
+    const { store } = props;
+
+25.  Passing the Store down implicitly via Context
+
+    class Provider extends Component {
+        getChildContext(){
+            return {
+                store: this.props.store
+            };
+        }
+        render (){
+            return this.props.children;
+        }
+    }
+    Provider.childeContextTypes = {
+        store: React.PropTypes.object
+    };
+
+
+    <Provider store={createStore(todoApp)}>
+        <TodoApp />
+    </Provider>
+
+    ... lots of stuff
+
+
+    "Don't use Context"
+
+26.  Passing the Store Down with <Provider> from React redux
+
+    react-redux has its own Provider and bindings
+
+    import {Provider} from 'react-redux';
+
+27.  Generating Containrs with connect() from React Redux (VisibleTodoList)
+
+    const mapStateToProps = (state) => {
+        return {
+            ...
+        }
+    }
+
+    const mapDispatchToProps = (dispatch) => {
+        return {
+            ...
+        }
+    }
+
+    import {conect} from 'react-redux';
+
+    //call twice
+    const VisibleTodoList = connect(
+        mapStateToProps,
+        mapDispatchToProps
+    )(TodoList);
+
+28.  Generating Containers with connect() from React Redux (AddTodo)
+
+    //defaults:
+    //1 - not subscribe to store
+    //2 - dispatch injected as prop by default
+    const AddTodo = connect()(AddTodo);
+
+29.  - (Footer Link)
+
+    ownProps as second argument of map functions
+
+30.  Redux:  Extracting Action Creators
+
+    Components shouldn't have to specify the ID.  Don't generate ID in reducer.
+    Use a function that generates the action.
+
+    Reuse Action Creators from multiple components.
