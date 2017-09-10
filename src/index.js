@@ -1,10 +1,5 @@
-import thunkMiddleware from 'redux-thunk';
-import { createLogger } from 'redux-logger';
-import api from './middleware/api';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import {
     BrowserRouter as Router,
@@ -13,26 +8,27 @@ import {
 } from 'react-router-dom';
 
 import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
-import reducer from './redux/reducers';
+import CrudContainer from './crud/CrudContainer';
+import BlogContainer from './blog/BlogContainer';
+//import registerServiceWorker from './registerServiceWorker';
+import configureStore from './redux/store';
 
-const loggerMiddleware = createLogger()
-
-const store = createStore(
-    reducer,
-    applyMiddleware(
-        thunkMiddleware, // lets us dispatch() functions
-        api,
-        loggerMiddleware // neat middleware that logs actions
-    ));
+const store = configureStore();
 
 ReactDOM.render(
     <Provider store={store}>
         <Router>
-            <Route path="/" component={App} />
+            <div>
+                <ul>
+                    <li><Link to="/">Home</Link></li>
+                    <li><Link to="/blog">Blog</Link></li>
+                </ul>
+
+                <Route exact path="/" component={CrudContainer} />
+                <Route path="/blog" component={BlogContainer} />
+            </div>
         </Router>
     </Provider>,
     document.getElementById('root')
 );
-registerServiceWorker();
+//registerServiceWorker();

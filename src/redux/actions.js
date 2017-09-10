@@ -1,5 +1,5 @@
-import * as ajaxUtil from '../util/ajaxUtil';
-import { makeActionCreator } from '../util/actionUtil';
+import * as ajaxUtil from './util/ajaxUtil';
+import { makeActionCreator } from './util/actionUtil';
 
 /*
  * action types 
@@ -19,8 +19,8 @@ export const UPDATE_TASK = 'UPDATE_TASK';
  * action creators
  */
 const ajaxInProgressAction = makeActionCreator(AJAX_IN_PROGRESS);
-const ajaxSuccessAction = makeActionCreator(AJAX_SUCCESS);
-const ajaxErrorAction = makeActionCreator(AJAX_ERROR);
+//const ajaxSuccessAction = makeActionCreator(AJAX_SUCCESS);
+//const ajaxErrorAction = makeActionCreator(AJAX_ERROR);
 
 
 const requestTasks = makeActionCreator(REQUEST_TASKS);

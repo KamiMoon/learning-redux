@@ -57,7 +57,7 @@ export function doDelete(url) {
 }
 
 //TODO - not used
-
+/*
 
 function api(config) {
 
@@ -116,3 +116,5 @@ function api(config) {
         }
     }
 }
+
+*/
