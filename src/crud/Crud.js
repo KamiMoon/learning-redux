@@ -3,10 +3,14 @@ import { connect } from 'react-redux';
 import TaskDisplay from './TaskDisplay';
 import TaskToAdd from './TaskToAdd';
 
-import { addTask, deleteTask, updateTask } from '../redux/actions';
+import { addTask, deleteTask, updateTask, getTasks } from '../redux/actions';
 
 //Top level presentaitonal component
 class CrudView extends Component {
+
+    componentDidMount() {
+        this.props.getTasks();
+    }
 
     render() {
 
@@ -32,7 +36,7 @@ class CrudView extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.props.tasks.map((task, index) => {
+                        {this.props.crud.tasks.map((task, index) => {
                             return (
                                 <TaskDisplay key={task.name} task={task}
                                     deleteTask={this.props.deleteTask}
@@ -51,12 +55,18 @@ class CrudView extends Component {
 
 
 const mapStateToProps = state => {
+
+    console.log(state);
+
     return {
-        tasks: state.tasks
+        crud: state.crudReducerFront.crud
     }
 }
 const mapDispatchToProps = dispatch => {
     return {
+        getTasks: () => {
+            dispatch(getTasks())
+        },
         addTask: task => {
             dispatch(addTask(task))
         },

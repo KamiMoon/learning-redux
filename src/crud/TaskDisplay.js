@@ -5,7 +5,6 @@ export default class TaskDisplay extends Component {
     constructor(props) {
         super(props);
 
-        console.log(props.task);
         this.state = { ...props.task };
     }
 
