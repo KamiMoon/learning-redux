@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
-import { addTask, deleteTask, updateTask, getTasks } from '../redux/actions';
 import { withRouter } from 'react-router-dom';
+
+import { addTask, deleteTask, updateTask, getTasks } from './redux/crudActions';
 import CrudView from './CrudView';
 
 const mapStateToProps = state => {

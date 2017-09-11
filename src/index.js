@@ -1,3 +1,6 @@
+import './index.css';
+
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -7,7 +10,7 @@ import {
     Link
 } from 'react-router-dom';
 
-import './index.css';
+
 import CrudContainer from './crud/CrudContainer';
 import BlogContainer from './blog/BlogContainer';
 //import registerServiceWorker from './registerServiceWorker';

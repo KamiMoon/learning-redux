@@ -1,20 +1,17 @@
-import { connect } from 'react-redux';
+import React from 'react';
+import { Route } from 'react-router-dom';
 import BlogList from './BlogList';
-import { withRouter } from 'react-router-dom';
+import BlogAdd from './BlogAdd';
 
-const mapStateToProps = state => {
-    return {
-        blog: state.blog
-    }
-}
-// const mapDispatchToProps = dispatch => {
-//     return {
-//     }
-// }
-
-const BlogContainer = withRouter(connect(
-    mapStateToProps,
-    null
-)(BlogList));
+//Routing
+const BlogContainer = ({ match }) => (
+    // here's a nested div
+    <div>
+        {/* here's a nested Route,
+          match.url helps us make a relative path */}
+        <Route exact path={match.url} component={BlogList} />
+        <Route path={match.url + '/add'} component={BlogAdd} />
+    </div>
+)
 
 export default BlogContainer;

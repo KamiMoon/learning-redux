@@ -1,5 +1,5 @@
-import * as ajaxUtil from './util/ajaxUtil';
-import { makeActionCreator } from './util/actionUtil';
+import * as ajaxUtil from '../../redux/util/ajaxUtil';
+import { makeActionCreator } from '../../redux/util/actionUtil';
 
 /*
  * action types 
