@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { query } from './redux/blogActions';
 
+import BlogListPost from './BlogListPost';
+
 class BlogList extends Component {
 
     loadData() {
@@ -28,6 +30,11 @@ class BlogList extends Component {
                 </div>
                 <div className="row">
                     <div className="col-md-9">
+                        {this.props.blogQueryResult.posts && this.props.blogQueryResult.posts.map((post, index) => {
+                            return (
+                                <BlogListPost key={post._id} post={post} />
+                            )
+                        })}
                     </div>
                     <div className="col-md-3">
                     </div>
@@ -40,7 +47,7 @@ class BlogList extends Component {
 
 const mapStateToProps = state => {
 
-    console.log(state);
+    //console.log(state);
 
     return {
         blogQueryResult: state.blogQueryResult
