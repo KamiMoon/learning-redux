@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import BInput from '../components/BInput';
 
+
 export default class BlogAdd extends Component {
     constructor(props) {
         super(props);
@@ -25,7 +26,13 @@ export default class BlogAdd extends Component {
         event.preventDefault();
         console.log(this.state);
 
+        //
     }
+
+    componentDidMount() {
+        console.log(this);
+    }
+
 
     render() {
 

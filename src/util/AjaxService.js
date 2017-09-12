@@ -10,7 +10,6 @@ import axios from 'axios';
 //https://www.npmjs.com/package/universal-cookie
 import Cookies from 'universal-cookie';
 
-
 export function get(url, payload) {
 
     let request;

@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 
 import BInput from '../components/BInput';
-import * as ajaxUtil from '../redux/util/ajaxUtil';
-
-
-import Cookies from 'universal-cookie';
+import AuthService from '../util/AuthService';
 
 
 //Top level presentaitonal component
@@ -31,15 +28,11 @@ export default class Login extends Component {
     onSubmit = (event) => {
         event.preventDefault();
         //TODO
-        ajaxUtil.post('/auth/local', {
-            email: this.state.email,
-            password: this.state.password
-        }).then((response) => {
-            console.log(response);
-
-            const cookies = new Cookies();
-            cookies.set('token', response.token);
-        })
+        AuthService.login(this.state.email, this.state.password).then(()=>{
+            // AuthService.getUser().then(user => {
+            //     console.log(user);
+            // });
+        });
     }
 
     render() {

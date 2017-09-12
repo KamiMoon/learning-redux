@@ -3,7 +3,7 @@
  * Based on http://redux.js.org/docs/recipes/ReducingBoilerplate.html
  */
 
-import * as ajaxUtil from './util/ajaxUtil';
+import * as ajaxUtil from '../util/AjaxService';
 
 export default
     function api({ dispatch, getState }) {

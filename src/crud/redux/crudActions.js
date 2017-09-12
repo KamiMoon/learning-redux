@@ -1,4 +1,4 @@
-import * as ajaxUtil from '../../redux/util/ajaxUtil';
+import * as ajaxUtil from '../../util/AjaxService';
 import { makeActionCreator } from '../../redux/util/actionUtil';
 
 /*
