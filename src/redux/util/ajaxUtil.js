@@ -7,7 +7,21 @@
 
 import fetch from 'isomorphic-fetch';
 
-export function get(url) {
+
+function mapParams(params){
+    var esc = encodeURIComponent;
+    var query = Object.keys(params)
+        .map(k => esc(k) + '=' + esc(params[k]))
+        .join('&');
+    return query;
+}
+
+export function get(url, payload) {
+
+    if(payload){
+        url = url + '?' + mapParams(payload);
+    }
+
     return fetch(url)
         .then(
         response => response.json(),

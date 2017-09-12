@@ -1,36 +1,29 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { query } from './redux/blogActions';
 
+import * as BlogActions from './redux/blogActions';
 import BlogListPost from './BlogListPost';
+import AddPost from './AddPost';
 
 class BlogList extends Component {
 
     loadData() {
-        this.props.query();
+        this.props.dispatch(BlogActions.query());
     }
 
     componentDidMount() {
         this.loadData();
     }
 
-
     render() {
 
         return (
             <div id="blog-container" className="container-fluid">
-                <div className="row">
-                    <div className="col-md-12">
-                        <Link to="/blog/add/1" className="btn btn-default btn-lg" role="button">Add Post</Link>
-                        <br />
-                        <br />
-                    </div>
-                </div>
+                <AddPost />
                 <div className="row">
                     <div className="col-md-9">
-                        {this.props.blogQueryResult.posts && this.props.blogQueryResult.posts.map((post, index) => {
+                        {this.props.blogQueryResult && this.props.blogQueryResult.posts && this.props.blogQueryResult.posts.map((post, index) => {
                             return (
                                 <BlogListPost key={post._id} post={post} />
                             )
@@ -47,23 +40,15 @@ class BlogList extends Component {
 
 const mapStateToProps = state => {
 
-    //console.log(state);
+    console.log(state);
 
     return {
-        blogQueryResult: state.blogQueryResult
-    }
-}
-const mapDispatchToProps = dispatch => {
-    return {
-        query: () => {
-            dispatch(query())
-        }
+        blogQueryResult: state.blog.blogQueryResult
     }
 }
 
 BlogList = withRouter(connect(
-    mapStateToProps,
-    mapDispatchToProps
+    mapStateToProps
 )(BlogList));
 
 export default BlogList;

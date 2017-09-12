@@ -3,60 +3,92 @@
  * Based on http://redux.js.org/docs/recipes/ReducingBoilerplate.html
  */
 
+import * as ajaxUtil from './util/ajaxUtil';
+
 export default
     function api({ dispatch, getState }) {
     return next => action => {
         const {
-        types,
-            callAPI,
-            shouldCallAPI = () => true,
-            payload = {}
+        method,
+        url,
+        preType,
+        errorType,
+        successType,
+        successProp,
+        payload
       } = action
 
-        if (!types) {
+        if (!method) {
             // Normal action: pass it on
             return next(action)
         }
 
-        if (
-            !Array.isArray(types) ||
-            types.length !== 3 ||
-            !types.every(type => typeof type === 'string')
-        ) {
-            throw new Error('Expected an array of three string types.')
+        if (preType) {
+            dispatch({
+                type: preType
+            });
         }
 
-        if (typeof callAPI !== 'function') {
-            throw new Error('Expected callAPI to be a function.')
+        let errorT = errorType;
+
+        if(!errorType){
+            errorT = 'AJAX_ERROR';
         }
 
-        if (!shouldCallAPI(getState())) {
-            return
+        if (method === 'GET') {
+
+            return ajaxUtil.get(url, payload).then(json =>
+                dispatch({
+                    type: successType,
+                    [successProp]: json
+                })
+            , error =>
+                dispatch({
+                    type: errorT,
+                    error
+                })
+            );
+            
+        }
+        else if (method === 'POST') {
+            
+            return ajaxUtil.post(url, payload).then(json =>
+                dispatch({
+                    type: successType,
+                    [successProp]: json
+                })
+            , error =>
+                dispatch({
+                    type: errorT,
+                    error
+                })
+            );
+        }
+        else if (method === 'PUT') {
+            return ajaxUtil.put(url, payload).then(json =>
+                dispatch({
+                    type: successType,
+                    [successProp]: json
+                })
+            , error =>
+                dispatch({
+                    type: errorT,
+                    error
+                })
+            );
+        }
+        else if (method === 'DELETE') {
+            return ajaxUtil.doDelete(url).then(json =>
+                dispatch({
+                    type: successType
+                })
+            , error =>
+                dispatch({
+                    type: errorT,
+                    error
+                })
+            );
         }
 
-        const [requestType, successType, failureType] = types
-
-        dispatch(
-            Object.assign({}, payload, {
-                type: requestType
-            })
-        )
-
-        return callAPI().then(
-            response =>
-                dispatch(
-                    Object.assign({}, payload, {
-                        response,
-                        type: successType
-                    })
-                ),
-            error =>
-                dispatch(
-                    Object.assign({}, payload, {
-                        error,
-                        type: failureType
-                    })
-                )
-        )
     }
 }

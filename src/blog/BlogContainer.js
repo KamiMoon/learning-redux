@@ -2,6 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import BlogList from './BlogList';
 import BlogAdd from './BlogAdd';
+import BlogView from './BlogView';
 
 //Routing
 const BlogContainer = ({ match }) => (
@@ -11,6 +12,7 @@ const BlogContainer = ({ match }) => (
           match.url helps us make a relative path */}
         <Route exact path={match.url} component={BlogList} />
         <Route path={match.url + '/add'} component={BlogAdd} />
+        <Route path={match.url + '/:id'} component={BlogView} />
     </div>
 )
 

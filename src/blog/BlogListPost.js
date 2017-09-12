@@ -4,8 +4,6 @@ import PostKeywords from './PostKeywords';
 
 export default class BlogListPost extends Component {
 
-
-
     render() {
 
         const post = this.props.post;
@@ -15,7 +13,7 @@ export default class BlogListPost extends Component {
                 <div className="media">
                     <div className="media-left">
                         <Link to={`/blog/${post._id}`}>
-                            <img />
+                            <img alt="todo" />
                         </Link>
                         {/* <b-img public-id="this.props..photo}" transformation="w_150,h_150,c_fit" alt="this.props..title}" className="media-object"></b-img> */}
                     </div>

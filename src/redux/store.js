@@ -1,7 +1,7 @@
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import { createStore, applyMiddleware } from 'redux';
-//import api from './api';
+import api from './api';
 import reducer from './reducers';
 
 const loggerMiddleware = createLogger()
@@ -12,7 +12,7 @@ const configureStore = preloadedState => {
         preloadedState,
         applyMiddleware(
             thunkMiddleware, // lets us dispatch() functions
-            //api,
+            api,
             loggerMiddleware // neat middleware that logs actions
         ));
 
