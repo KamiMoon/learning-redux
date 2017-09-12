@@ -1,52 +1,41 @@
 import React, { Component } from 'react';
 import BInput from '../components/BInput';
 
-
-export default class BlogAdd extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            title: '',
-            headingQuote: ''
-        };
-    }
-
-    handleInputChange = (event) => {
-        const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
-
-        this.setState({
-            [name]: value
-        });
-    }
-
-    handleSubmit = (event) => {
-        event.preventDefault();
-        console.log(this.state);
-
-        //
-    }
-
-    componentDidMount() {
-        console.log(this);
-    }
+import { Field, reduxForm } from 'redux-form';
+import {BoostrapInput, BoostrapTextArea}from '../components/BootstrapFields';
 
 
-    render() {
+const validate = values => {
+    const errors = {}
+    if (!values.title) {
+      errors.title = 'Required'
+    } 
 
+    if (!values.headingQuote) {
+      errors.headingQuote = 'Required'
+    } 
+
+    return errors
+  }
+
+
+ 
+
+
+let BlogAdd = props => {
+    const { handleSubmit } = props
+    
         return (
             <div className="container">
-                <form name="form" onSubmit={this.handleSubmit}>
+                <form name="form" onSubmit={ handleSubmit }>
                     <div className="row">
                         <div className="col-md-12">
                             <h3><span className="glyphicon glyphicon-globe"></span> Post Info:</h3>
                             <div className="form-horizontal">
-                                <BInput name="title" minLength="4" required="true"
-                                    value={this.state.title} onChange={this.handleInputChange} />
-                                <BInput type="textarea" name="headingQuote" label="Post Summary" cols="5" rows="3" required="true"
-                                    value={this.state.headingQuote} onChange={this.handleInputChange} />
+                                <Field name="title" component={BoostrapInput} label="Title" />
+                                <Field name="headingQuote" component={BoostrapTextArea} rows="5" cols="6" label="Quote" />
+
+
                             </div>
                         </div>
                     </div>
@@ -61,6 +50,12 @@ export default class BlogAdd extends Component {
             </div>
 
         );
-
-    }
 }
+
+BlogAdd = reduxForm({
+    // a unique name for the form
+    form: 'BlogAdd',
+    validate
+  })(BlogAdd)
+  
+  export default BlogAdd;
