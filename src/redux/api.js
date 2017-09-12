@@ -42,7 +42,7 @@ export default
                     type: successType,
                     [successProp]: json
                 })
-            , error =>
+             ).catch(error =>
                 dispatch({
                     type: errorT,
                     error
@@ -57,7 +57,7 @@ export default
                     type: successType,
                     [successProp]: json
                 })
-            , error =>
+            ).catch(error =>
                 dispatch({
                     type: errorT,
                     error
@@ -70,7 +70,7 @@ export default
                     type: successType,
                     [successProp]: json
                 })
-            , error =>
+            ).catch(error =>
                 dispatch({
                     type: errorT,
                     error
@@ -82,7 +82,7 @@ export default
                 dispatch({
                     type: successType
                 })
-            , error =>
+            ).catch(error =>
                 dispatch({
                     type: errorT,
                     error

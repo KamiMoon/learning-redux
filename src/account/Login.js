@@ -3,6 +3,10 @@ import React, { Component } from 'react';
 import BInput from '../components/BInput';
 import * as ajaxUtil from '../redux/util/ajaxUtil';
 
+
+import Cookies from 'universal-cookie';
+
+
 //Top level presentaitonal component
 export default class Login extends Component {
     constructor(props) {
@@ -32,6 +36,9 @@ export default class Login extends Component {
             password: this.state.password
         }).then((response) => {
             console.log(response);
+
+            const cookies = new Cookies();
+            cookies.set('token', response.token);
         })
     }
 
