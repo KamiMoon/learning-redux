@@ -5,6 +5,7 @@ export default function blogReducer(state = {}, action) {
 
         case 'BLOG_QUERY_RESULTS':
             return {
+                ...state,
                 blogQueryResult :{
                     isFetching: false,
                     ...action.blogQueryResult
@@ -12,6 +13,7 @@ export default function blogReducer(state = {}, action) {
             };
         case 'POST_GET_RESULT':
             return {
+                ...state,
                 post: action.post
             };
         default:

@@ -27,7 +27,8 @@ export default class BInput extends Component {
                 placeholder={this.props.placeholder}
                 rows={this.props.rows} cols={this.props.cols}
             ></textarea>
-        } else {
+        }
+        else {
             input = <input type={type}
                 value={this.props.value} onChange={this.props.onChange}
                 className="form-control input-lg" id={this.props.id} name={this.props.name}
