@@ -35,7 +35,8 @@ export function create(post) {
         url: `${baseUrl}`,
         successType: 'POST_POST_RESULT',
         successProp: 'post',
-        payload: post
+        payload: post,
+        showLoadingSpinner: true
     };
 }
 

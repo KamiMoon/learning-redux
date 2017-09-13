@@ -10,7 +10,7 @@ import {
     Link
 } from 'react-router-dom';
 
-
+import LoadingSpinner from './components/LoadingSpinner';
 import CrudContainer from './crud/CrudContainer';
 import BlogContainer from './blog/BlogContainer';
 import Login from './account/Login';
@@ -28,6 +28,8 @@ ReactDOM.render(
                     <li><Link to="/blog">Blog</Link></li>
                     <li><Link to="/login">Login</Link></li>
                 </ul>
+
+                <LoadingSpinner />
 
                 <Route exact path="/" component={CrudContainer} />
                 <Route path="/blog" component={BlogContainer} />

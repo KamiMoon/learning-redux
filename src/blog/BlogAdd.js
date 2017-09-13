@@ -70,7 +70,7 @@ class BlogAdd extends Component  {
                     </div>
                     <div className="row">
                         <div className="col-md-12">
-                            <button type="submti" className="btn btn-success">Submit</button>
+                            <button type="submti" className="btn btn-success" disabled={this.props.pristine || this.props.submitting}>Submit</button>
                             <br />
                             <br />
                         </div>
@@ -88,6 +88,6 @@ BlogAdd = reduxForm({
     validate
   })(BlogAdd)
   
-BlogAdd = connect()(BlogAdd);
+//BlogAdd = connect()(BlogAdd);
 
 export default BlogAdd;
