@@ -1,23 +1,16 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+
 import TaskDisplay from './TaskDisplay';
 import TaskToAdd from './TaskToAdd';
+import { addTask, deleteTask, updateTask, getTasks } from './redux/crudActions';
 
-//Top level presentaitonal component
-export default class CrudView extends Component {
-
-    loadData() {
-        this.props.getTasks();
-    }
+class CrudView extends Component {
 
     componentDidMount() {
-        this.loadData();
+        this.props.getTasks();
     }
-
-    //componentWillReceiveProps(nextProps) {
-    //if (nextProps.userId !== this.props.userId) {
-    //this.loadData();
-    //}
-    //}
 
     render() {
 
@@ -58,3 +51,12 @@ export default class CrudView extends Component {
         );
     }
 }
+
+CrudView = withRouter(connect(
+    state => ({
+        crud: state.crud
+    }),
+    {addTask, deleteTask, updateTask, getTasks}
+)(CrudView))
+
+export default CrudView;

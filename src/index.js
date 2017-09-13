@@ -11,7 +11,7 @@ import {
 } from 'react-router-dom';
 
 import LoadingSpinner from './components/LoadingSpinner';
-import CrudContainer from './crud/CrudContainer';
+import CrudView from './crud/CrudView';
 import BlogContainer from './blog/BlogContainer';
 import Login from './account/Login';
 //import registerServiceWorker from './registerServiceWorker';
@@ -31,7 +31,7 @@ ReactDOM.render(
 
                 <LoadingSpinner />
 
-                <Route exact path="/" component={CrudContainer} />
+                <Route exact path="/" component={CrudView} />
                 <Route path="/blog" component={BlogContainer} />
                 <Route path="/login" component={Login} />
             </div>
