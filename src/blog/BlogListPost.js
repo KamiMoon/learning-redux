@@ -12,13 +12,13 @@ export default class BlogListPost extends Component {
             <article>
                 <div className="media">
                     <div className="media-left">
-                        <Link to={`/blog/${post._id}`}>
+                        <Link to={`/blog/view/${post._id}`}>
                             <img alt="todo" />
                         </Link>
                         {/* <b-img public-id="this.props..photo}" transformation="w_150,h_150,c_fit" alt="this.props..title}" className="media-object"></b-img> */}
                     </div>
                     <div className="media-body">
-                        <Link to={`/blog/${post._id}`} className="media-heading post-preview-title">
+                        <Link to={`/blog/view/${post._id}`} className="media-heading post-preview-title">
                             {post.title}
                         </Link>
                         <ul className="blog-meta-list">
@@ -36,7 +36,7 @@ export default class BlogListPost extends Component {
                             </li>
                             <li className="comments" property="discussionUrl">
 
-                                <Link to={`/blog/${post._id}`} className="btn btn-primary" type="button">
+                                <Link to={`/blog/view/${post._id}`} className="btn btn-primary" type="button">
                                     Comments
                                 </Link>
                             </li>

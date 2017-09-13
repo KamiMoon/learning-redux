@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
+import { Field, reduxForm, SubmissionError } from 'redux-form';
+
 import BInput from '../components/BInput';
+import {BoostrapInput, BoostrapTextArea} from '../components/BootstrapFields';
 
-import { Field, reduxForm } from 'redux-form';
-import {BoostrapInput, BoostrapTextArea}from '../components/BootstrapFields';
 
+import {create} from './redux/blogActions';
 
 const validate = values => {
     const errors = {}
@@ -15,19 +18,45 @@ const validate = values => {
       errors.headingQuote = 'Required'
     } 
 
-    return errors
-  }
+    return errors;
+}
+
+class BlogAdd extends Component  {
+
+    submit = (values) => {
+        /*
+        return new Promise( ( resolve, reject) => {
+            console.log('submit');
 
 
- 
+            if(values.title === 'fail'){
+                 throw new SubmissionError({
+                 title: 'Title not unique',
+                 _error: 'Login failed!'
+               });
+            }
+            
+            resolve();
+        });*/
 
+        const result = this.props.dispatch(create(values));
 
-let BlogAdd = props => {
-    const { handleSubmit } = props
-    
+        //const result=create();
+
+        console.log(result);
+
+        return result;
+    }
+
+    render() {
         return (
             <div className="container">
-                <form name="form" onSubmit={ handleSubmit }>
+
+                {this.props.submitSucceeded && <h2>Success!</h2>}
+
+                {this.props.submitFailed && <h2>Submit Failed</h2>}
+
+                <form name="form" onSubmit={ this.props.handleSubmit(this.submit)}>
                     <div className="row">
                         <div className="col-md-12">
                             <h3><span className="glyphicon glyphicon-globe"></span> Post Info:</h3>
@@ -50,6 +79,7 @@ let BlogAdd = props => {
             </div>
 
         );
+    }
 }
 
 BlogAdd = reduxForm({
@@ -58,4 +88,6 @@ BlogAdd = reduxForm({
     validate
   })(BlogAdd)
   
-  export default BlogAdd;
+BlogAdd = connect()(BlogAdd);
+
+export default BlogAdd;

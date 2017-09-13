@@ -24,7 +24,8 @@ export function update(post) {
         method: 'PUT',
         url: `${baseUrl}/${post._id}`,
         successType: 'POST_PUT_RESULT',
-        successProp: 'post'
+        successProp: 'post',
+        payload: post
     };
 }
 
@@ -33,7 +34,8 @@ export function create(post) {
         method: 'POST',
         url: `${baseUrl}`,
         successType: 'POST_POST_RESULT',
-        successProp: 'post'
+        successProp: 'post',
+        payload: post
     };
 }
 

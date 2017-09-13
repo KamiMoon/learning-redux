@@ -12,6 +12,8 @@ import Post from './Post';
 class BlogView extends Component {
 
     loadData() {
+        console.log('Blog View');
+
         const id = this.props.match.params.id;
         this.props.dispatch(BlogActions.get(id));
     }

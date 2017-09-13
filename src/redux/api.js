@@ -4,9 +4,36 @@
  */
 
 import * as ajaxUtil from '../util/AjaxService';
+import { SubmissionError } from 'redux-form';
+
 
 export default
     function api({ dispatch, getState }) {
+
+
+        function handleErrors(errorT, error){
+            
+
+            if(error.response && error.response.data && error.response.data.errors){
+                let errorObj = {};
+                for(let key in error.response.data.errors){
+                    errorObj[key] = error.response.data.errors[key].message;
+                }
+                dispatch({
+                    type: errorT,
+                    errorObj
+                });
+
+                throw new SubmissionError(errorObj);
+            }else{
+                dispatch({
+                    type: errorT,
+                    error
+                });
+            }
+
+        }
+
     return next => action => {
         const {
         method,
@@ -42,12 +69,7 @@ export default
                     type: successType,
                     [successProp]: json
                 })
-             ).catch(error =>
-                dispatch({
-                    type: errorT,
-                    error
-                })
-            );
+             ).catch(error => {handleErrors(errorT, error)});
             
         }
         else if (method === 'POST') {
@@ -57,12 +79,7 @@ export default
                     type: successType,
                     [successProp]: json
                 })
-            ).catch(error =>
-                dispatch({
-                    type: errorT,
-                    error
-                })
-            );
+            ).catch(error => {handleErrors(errorT, error)});
         }
         else if (method === 'PUT') {
             return ajaxUtil.put(url, payload).then(json =>
@@ -70,24 +87,14 @@ export default
                     type: successType,
                     [successProp]: json
                 })
-            ).catch(error =>
-                dispatch({
-                    type: errorT,
-                    error
-                })
-            );
+            ).catch(error => {handleErrors(errorT, error)});
         }
         else if (method === 'DELETE') {
             return ajaxUtil.doDelete(url).then(json =>
                 dispatch({
                     type: successType
                 })
-            ).catch(error =>
-                dispatch({
-                    type: errorT,
-                    error
-                })
-            );
+            ).catch(error => {handleErrors(errorT, error)});
         }
 
     }

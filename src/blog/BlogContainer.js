@@ -12,7 +12,7 @@ const BlogContainer = ({ match }) => (
           match.url helps us make a relative path */}
         <Route exact path={match.url} component={BlogList} />
         <Route path={match.url + '/add'} component={BlogAdd} />
-        <Route path={match.url + '/:id'} component={BlogView} />
+        <Route path={match.url + '/view/:id'} component={BlogView} />
     </div>
 )
 
