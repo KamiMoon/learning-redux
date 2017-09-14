@@ -12,7 +12,7 @@ class NavBar extends Component {
     render() {
         const isLoggedIn = this.props.user && this.props.user.roles;
 
-        const userId = 'eric';
+        const userId = this.props.user ? this.props.user._id: '';
         
         return (
             <nav className="navbar navbar-default navbar-fixed-top topnav">
