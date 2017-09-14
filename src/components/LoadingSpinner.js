@@ -7,11 +7,9 @@ let LoadingSpinner = props =>
 </div>}
 </div>
 
-const mapStateToProps = state => {    
-    return {
-        showLoadingSpinner: state.loadingSpinner.show
-    }
-}
+const mapStateToProps = state => ({    
+    showLoadingSpinner: state.loadingSpinner.show
+});
     
 LoadingSpinner = connect(
     mapStateToProps
@@ -21,17 +19,13 @@ LoadingSpinner = connect(
 
 //redux
 
-export function showLoadingSpinner(){
-    return {
-        type: 'SHOW_LOADING_SPINNER'
-    };
-}
+export const showLoadingSpinner = () => ({
+    type: 'SHOW_LOADING_SPINNER'
+});
 
-export function hideLoadingSpinner(){
-    return {
-        type: 'HIDE_LOADING_SPINNER'
-    };
-}
+export const hideLoadingSpinner = () => ({
+    type: 'HIDE_LOADING_SPINNER'
+});
 
 export function loadingSpinnerReducer(state = {show: false}, action){
     if(action.type === 'SHOW_LOADING_SPINNER'){

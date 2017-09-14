@@ -14,29 +14,30 @@ import LoadingSpinner from './components/LoadingSpinner';
 import CrudView from './crud/CrudView';
 import BlogContainer from './blog/BlogContainer';
 import Login from './account/Login';
+import NavBar from './components/NavBar';
+import Footer from './components/Footer';
+
 //import registerServiceWorker from './registerServiceWorker';
 import configureStore from './redux/store';
 
-const store = configureStore();
+export const store = configureStore();
 
 ReactDOM.render(
     <Provider store={store}>
         <Router>
             <div>
-                <ul>
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/blog">Blog</Link></li>
-                    <li><Link to="/login">Login</Link></li>
-                </ul>
-
+                <NavBar />
                 <LoadingSpinner />
 
                 <Route exact path="/" component={CrudView} />
                 <Route path="/blog" component={BlogContainer} />
                 <Route path="/login" component={Login} />
+
+                <Footer />
             </div>
         </Router>
     </Provider>,
     document.getElementById('root')
 );
 //registerServiceWorker();
+

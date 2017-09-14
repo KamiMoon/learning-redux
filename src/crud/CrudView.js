@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 
 import TaskDisplay from './TaskDisplay';
 import TaskToAdd from './TaskToAdd';
@@ -52,11 +51,9 @@ class CrudView extends Component {
     }
 }
 
-CrudView = withRouter(connect(
-    state => ({
-        crud: state.crud
-    }),
+CrudView = connect(
+    state => ({crud: state.crud}),
     {addTask, deleteTask, updateTask, getTasks}
-)(CrudView))
+)(CrudView)
 
 export default CrudView;

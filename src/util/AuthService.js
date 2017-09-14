@@ -2,7 +2,11 @@
 import * as ajaxUtil from './AjaxService';
 import Cookies from 'universal-cookie';
 import UserService from './UserService';
-import User from './User';
+import {User, setCurrentUser} from './User';
+
+import {store} from '../index';
+
+
 
 class AuthService {
     loadingUserPromise = null;
@@ -15,10 +19,14 @@ class AuthService {
             this.loadingUserPromise = this.getUser();
 
             this.loadingUserPromise.then(user => {
-                this.currentUser = user;
+                this.setUser(user);
                 this.loadingUserPromise = null;
             });
         }
+    }
+
+    setUser(user){
+        store.dispatch(setCurrentUser(user));
     }
 
     login(email, password) {
@@ -34,7 +42,7 @@ class AuthService {
 
                 this.loadingUserPromise = this.getUser();
                 this.loadingUserPromise.then(user => {
-                    this.currentUser = user;
+                    this.setUser(user);
                     this.loadingUserPromise = null;
                     resolve();
                 });
@@ -49,7 +57,7 @@ class AuthService {
 
     logout() {
         this.cookieService.remove('token');
-        this.currentUser = new User();
+        this.setUser({});
     }
 
     createUser(user) {
@@ -60,7 +68,8 @@ class AuthService {
 
                 this.loadingUserPromise = this.getUser();
                 this.loadingUserPromise.then(lookedUpUser => {
-                    this.currentUser = lookedUpUser;
+                    this.setUser(lookedUpUser);
+
                     this.loadingUserPromise = null;
                     resolve(lookedUpUser);
                 });
@@ -71,11 +80,14 @@ class AuthService {
     }
 
     isLoggedIn() {
-        return this.currentUser && this.currentUser.roles;
+        const currentUser = this.getCurrentUser();
+        return currentUser && currentUser.roles;
     }
 
     isLoggedInAsync() {
         return new Promise((resolve, reject) => {
+
+            const currentUser = this.getCurrentUser();
 
             if (this.loadingUserPromise) {
                 this.loadingUserPromise.then(() => {
@@ -84,7 +96,7 @@ class AuthService {
                     .catch(() => {
                         resolve(false);
                     });
-            } else if (this.currentUser && this.currentUser.roles) {
+            } else if (this.isLoggedIn()) {
                 resolve(true);
             } else {
                 resolve(false);
@@ -94,11 +106,12 @@ class AuthService {
     }
 
     isAdmin() {
-        if (!this.currentUser || !this.currentUser.roles) {
+        const currentUser = this.getCurrentUser();
+        if (!currentUser || !currentUser.roles) {
             return false;
         }
 
-        const pos = this.currentUser.roles.map(e => {
+        const pos = currentUser.roles.map(e => {
             return e.role;
         }).indexOf('admin');
 
@@ -106,11 +119,12 @@ class AuthService {
     }
 
     hasRole(role) {
-        if (!this.currentUser || !this.currentUser.roles) {
+        const currentUser = this.getCurrentUser();
+        if (!currentUser || !currentUser.roles) {
             return false;
         }
 
-        const pos = this.currentUser.roles.map(function (e) {
+        const pos = currentUser.roles.map(function (e) {
             return e.role;
         }).indexOf(role);
 
@@ -119,14 +133,15 @@ class AuthService {
 
     hasRoles(roles) {
         let hadAny = false;
+        const currentUser = this.getCurrentUser();
 
-        if (!this.currentUser || !this.currentUser.roles) {
+        if (!currentUser || !currentUser.roles) {
             return false;
         }
 
         for (let i = 0; i < roles.length; i++) {
 
-            const pos = this.currentUser.roles.map(function (e) {
+            const pos = currentUser.roles.map(function (e) {
                 return e.role;
             }).indexOf(roles[i]);
 
@@ -140,15 +155,16 @@ class AuthService {
     }
 
     isMine(userId) {
-        if (!this.currentUser || !userId) {
+        const currentUser = this.getCurrentUser();
+        if (!currentUser || !userId) {
             return false;
         }
 
-        return this.currentUser._id === userId;
+        return currentUser._id === userId;
     }
 
     getCurrentUser() {
-        return this.currentUser;
+        return store.getState().user;
     }
 
     getToken() {

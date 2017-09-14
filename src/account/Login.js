@@ -27,6 +27,10 @@ export default class Login extends Component {
 
     onSubmit = (event) => {
         event.preventDefault();
+
+
+        //AuthService.getCurrentUser();
+
         //TODO
         AuthService.login(this.state.email, this.state.password).then(()=>{
             // AuthService.getUser().then(user => {

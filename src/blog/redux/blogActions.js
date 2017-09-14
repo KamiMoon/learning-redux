@@ -1,14 +1,12 @@
 const baseUrl = '/api/blog';
 
-export function query(searchParams) {
-    return {
-        method: 'GET',
-        url: baseUrl,
-        successType: 'BLOG_QUERY_RESULTS',
-        successProp: 'blogQueryResult',
-        payload: searchParams
-    };
-}
+export const query = (searchParams) => ({
+    method: 'GET',
+    url: baseUrl,
+    successType: 'BLOG_QUERY_RESULTS',
+    successProp: 'blogQueryResult',
+    payload: searchParams
+});
 
 export function get(id) {
     return {
