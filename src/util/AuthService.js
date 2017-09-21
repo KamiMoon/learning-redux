@@ -1,180 +1,181 @@
-
 import * as ajaxUtil from './AjaxService';
 import Cookies from 'universal-cookie';
 import UserService from './UserService';
-import {User, setCurrentUser} from './User';
+import { User, setCurrentUser } from './User';
 
-import {store} from '../index';
-
-
+import { store } from '../index';
 
 class AuthService {
-    loadingUserPromise = null;
-    
-    constructor(){
-        this.cookieService = new Cookies();
-        this.userService = UserService;
+  loadingUserPromise = null;
 
-        if (this.getToken()) {
-            this.loadingUserPromise = this.getUser();
+  constructor() {
+    this.cookieService = new Cookies();
+    this.userService = UserService;
 
-            this.loadingUserPromise.then(user => {
-                this.setUser(user);
-                this.loadingUserPromise = null;
-            });
-        }
+    if (this.getToken()) {
+      this.loadingUserPromise = this.getUser();
+
+      this.loadingUserPromise.then(user => {
+        this.setUser(user);
+        this.loadingUserPromise = null;
+      });
     }
+  }
 
-    setUser(user){
-        store.dispatch(setCurrentUser(user));
-    }
+  setUser(user) {
+    store.dispatch(setCurrentUser(user));
+  }
 
-    login(email, password) {
+  login(email, password) {
+    return new Promise((resolve, reject) => {
+      const request = ajaxUtil.post('/auth/local', {
+        email: email,
+        password: password
+      });
 
-        return new Promise((resolve, reject) => {
-            const request = ajaxUtil.post('/auth/local', {
-                email: email,
-                password: password
-            });
+      request.then(response => {
+        this.cookieService.set('token', response['token']);
 
-            request.then(response => {
-                this.cookieService.set('token', response['token']);
-
-                this.loadingUserPromise = this.getUser();
-                this.loadingUserPromise.then(user => {
-                    this.setUser(user);
-                    this.loadingUserPromise = null;
-                    resolve();
-                });
-            });
-
-            request.catch(err => {
-                this.logout();
-                reject(err);
-            });
+        this.loadingUserPromise = this.getUser();
+        this.loadingUserPromise.then(user => {
+          this.setUser(user);
+          this.loadingUserPromise = null;
+          resolve();
         });
-    }
+      });
 
-    logout() {
-        this.cookieService.remove('token');
-        this.setUser({});
-    }
+      request.catch(err => {
+        this.logout();
+        reject(err);
+      });
+    });
+  }
 
-    createUser(user) {
-        return new Promise((resolve, reject) => {
+  logout() {
+    this.cookieService.remove('token');
+    this.setUser({});
+  }
 
-            this.userService.create(user).then(response => {
-                this.cookieService.set('token', response['token']);
+  createUser(user) {
+    return new Promise((resolve, reject) => {
+      this.userService
+        .create(user)
+        .then(response => {
+          this.cookieService.set('token', response['token']);
 
-                this.loadingUserPromise = this.getUser();
-                this.loadingUserPromise.then(lookedUpUser => {
-                    this.setUser(lookedUpUser);
+          this.loadingUserPromise = this.getUser();
+          this.loadingUserPromise.then(lookedUpUser => {
+            this.setUser(lookedUpUser);
 
-                    this.loadingUserPromise = null;
-                    resolve(lookedUpUser);
-                });
-            }).catch(err => {
-                reject(err);
-            });
+            this.loadingUserPromise = null;
+            resolve(lookedUpUser);
+          });
+        })
+        .catch(err => {
+          reject(err);
         });
+    });
+  }
+
+  isLoggedIn() {
+    const currentUser = this.getCurrentUser();
+    return currentUser && currentUser.roles;
+  }
+
+  isLoggedInAsync() {
+    return new Promise((resolve, reject) => {
+      const currentUser = this.getCurrentUser();
+
+      if (this.loadingUserPromise) {
+        this.loadingUserPromise
+          .then(() => {
+            resolve(true);
+          })
+          .catch(() => {
+            resolve(false);
+          });
+      } else if (this.isLoggedIn()) {
+        resolve(true);
+      } else {
+        resolve(false);
+      }
+    });
+  }
+
+  isAdmin() {
+    const currentUser = this.getCurrentUser();
+    if (!currentUser || !currentUser.roles) {
+      return false;
     }
 
-    isLoggedIn() {
-        const currentUser = this.getCurrentUser();
-        return currentUser && currentUser.roles;
+    const pos = currentUser.roles
+      .map(e => {
+        return e.role;
+      })
+      .indexOf('admin');
+
+    return pos !== -1;
+  }
+
+  hasRole(role) {
+    const currentUser = this.getCurrentUser();
+    if (!currentUser || !currentUser.roles) {
+      return false;
     }
 
-    isLoggedInAsync() {
-        return new Promise((resolve, reject) => {
+    const pos = currentUser.roles
+      .map(function(e) {
+        return e.role;
+      })
+      .indexOf(role);
 
-            const currentUser = this.getCurrentUser();
+    return pos !== -1;
+  }
 
-            if (this.loadingUserPromise) {
-                this.loadingUserPromise.then(() => {
-                    resolve(true);
-                })
-                    .catch(() => {
-                        resolve(false);
-                    });
-            } else if (this.isLoggedIn()) {
-                resolve(true);
-            } else {
-                resolve(false);
-            }
+  hasRoles(roles) {
+    let hadAny = false;
+    const currentUser = this.getCurrentUser();
 
-        });
+    if (!currentUser || !currentUser.roles) {
+      return false;
     }
 
-    isAdmin() {
-        const currentUser = this.getCurrentUser();
-        if (!currentUser || !currentUser.roles) {
-            return false;
-        }
+    for (let i = 0; i < roles.length; i++) {
+      const pos = currentUser.roles
+        .map(function(e) {
+          return e.role;
+        })
+        .indexOf(roles[i]);
 
-        const pos = currentUser.roles.map(e => {
-            return e.role;
-        }).indexOf('admin');
-
-        return pos !== -1;
+      if (pos !== -1) {
+        hadAny = true;
+        break;
+      }
     }
 
-    hasRole(role) {
-        const currentUser = this.getCurrentUser();
-        if (!currentUser || !currentUser.roles) {
-            return false;
-        }
+    return hadAny;
+  }
 
-        const pos = currentUser.roles.map(function (e) {
-            return e.role;
-        }).indexOf(role);
-
-        return pos !== -1;
+  isMine(userId) {
+    const currentUser = this.getCurrentUser();
+    if (!currentUser || !userId) {
+      return false;
     }
 
-    hasRoles(roles) {
-        let hadAny = false;
-        const currentUser = this.getCurrentUser();
+    return currentUser._id === userId;
+  }
 
-        if (!currentUser || !currentUser.roles) {
-            return false;
-        }
+  getCurrentUser() {
+    return store.getState().user;
+  }
 
-        for (let i = 0; i < roles.length; i++) {
+  getToken() {
+    return this.cookieService.get('token');
+  }
 
-            const pos = currentUser.roles.map(function (e) {
-                return e.role;
-            }).indexOf(roles[i]);
-
-            if (pos !== -1) {
-                hadAny = true;
-                break;
-            }
-        }
-
-        return hadAny;
-    }
-
-    isMine(userId) {
-        const currentUser = this.getCurrentUser();
-        if (!currentUser || !userId) {
-            return false;
-        }
-
-        return currentUser._id === userId;
-    }
-
-    getCurrentUser() {
-        return store.getState().user;
-    }
-
-    getToken() {
-        return this.cookieService.get('token');
-    }
-
-    getUser(){
-        return this.userService.get();
-    }
-
+  getUser() {
+    return this.userService.get();
+  }
 }
 
 export default new AuthService();
