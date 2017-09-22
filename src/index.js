@@ -30,13 +30,16 @@ ReactDOM.render(
         <NavBar />
         <LoadingSpinner />
 
-        <Route exact path="/" component={Main} />
-        <Route path="/blog" component={BlogContainer} />
-        <Route exact path="/crud" component={CrudView} />
-        <Route exact path="/portfolio" component={Portfolio} />
-        <Route exact path="/contact" component={Contact} />
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
+        <div id="main-container" className="container-fluid">
+          <br />
+          <Route exact path="/" component={Main} />
+          <Route path="/blog" component={BlogContainer} />
+          <Route exact path="/crud" component={CrudView} />
+          <Route exact path="/portfolio" component={Portfolio} />
+          <Route exact path="/contact" component={Contact} />
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
+        </div>
 
         <Footer />
       </div>
