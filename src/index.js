@@ -14,6 +14,8 @@ import Login from './account/Login';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 import Main from './main/Main';
+import Portfolio from './main/Portfolio';
+import Contact from './main/Contact';
 
 //import registerServiceWorker from './registerServiceWorker';
 import configureStore from './redux/store';
@@ -28,8 +30,10 @@ ReactDOM.render(
         <LoadingSpinner />
 
         <Route exact path="/" component={Main} />
-        <Route exact path="/crud" component={CrudView} />
         <Route path="/blog" component={BlogContainer} />
+        <Route exact path="/crud" component={CrudView} />
+        <Route exact path="/portfolio" component={Portfolio} />
+        <Route exact path="/contact" component={Contact} />
         <Route path="/login" component={Login} />
 
         <Footer />
