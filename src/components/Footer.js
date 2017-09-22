@@ -15,13 +15,13 @@ export default class Footer extends Component {
               <h3>Site</h3>
               <ul>
                 <li>
-                  <a href="/">Home</a>{' '}
+                  <Link to="/">HOME</Link>
                 </li>
                 <li>
-                  <a href="/portfolio">Portfolio</a>{' '}
+                  <Link to="/portfolio">PORTFOLIO</Link>
                 </li>
                 <li>
-                  <a href="/blog">Blog</a>{' '}
+                  <Link to="/blog">BLOG</Link>
                 </li>
                 <li>&nbsp;</li>
               </ul>
@@ -30,7 +30,11 @@ export default class Footer extends Component {
               <h3>Social</h3>
               <ul className="social-links">
                 <li>
-                  <a href="https://twitter.com/ek_kiz" target="_blank">
+                  <a
+                    href="https://twitter.com/ek_kiz"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <span className="fa-stack">
                       <i className="fa fa-square-o fa-stack-2x fa-inverse" />
                       <i className="fa fa-twitter fa-stack-1x fa-inverse" />
@@ -42,6 +46,7 @@ export default class Footer extends Component {
                   <a
                     href="https://www.facebook.com/eric.kizaki"
                     target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <span className="fa-stack">
                       <i className="fa fa-square-o fa-stack-2x fa-inverse" />
@@ -54,6 +59,7 @@ export default class Footer extends Component {
                   <a
                     href="https://www.linkedin.com/in/erickizaki"
                     target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <span className="fa-stack">
                       <i className="fa fa-square-o fa-stack-2x fa-inverse" />
@@ -63,7 +69,11 @@ export default class Footer extends Component {
                   </a>
                 </li>
                 <li>
-                  <a href="https://github.com/KamiMoon" target="_blank">
+                  <a
+                    href="https://github.com/KamiMoon"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <span className="fa-stack">
                       <i className="fa fa-square-o fa-stack-2x fa-inverse" />
                       <i className="fa fa-github fa-stack-1x fa-inverse" />
@@ -118,7 +128,7 @@ export default class Footer extends Component {
           <div className="row">
             <div className="cold-md-12">
               <hr />
-              <div id="footer-author">Eric Kizaki 2015</div>
+              <div id="footer-author">Eric Kizaki 2017</div>
             </div>
           </div>
           <a id="go-to-top" href="#" />

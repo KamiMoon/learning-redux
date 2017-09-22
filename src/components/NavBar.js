@@ -62,6 +62,7 @@ class NavBar extends Component {
                     <a
                       href="https://dazzling-fire-6644.firebaseapp.com/presentations/#/start"
                       target="_blank"
+                      rel="noopener noreferrer"
                     >
                       WebGL Presentation
                     </a>
@@ -70,6 +71,7 @@ class NavBar extends Component {
                     <a
                       href="https://dazzling-fire-6644.firebaseapp.com/threejs/"
                       target="_blank"
+                      rel="noopener noreferrer"
                     >
                       Three.js House
                     </a>
@@ -107,6 +109,7 @@ class NavBar extends Component {
                     <a
                       href="https://github.com/KamiMoon/TodoMVC"
                       target="_blank"
+                      rel="noopener noreferrer"
                     >
                       jQuery
                     </a>
@@ -115,6 +118,7 @@ class NavBar extends Component {
                     <a
                       href="https://github.com/KamiMoon/websocketdemo"
                       target="_blank"
+                      rel="noopener noreferrer"
                     >
                       Java
                     </a>
