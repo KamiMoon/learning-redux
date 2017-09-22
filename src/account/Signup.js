@@ -1,17 +1,49 @@
 import React, { Component } from 'react';
 
-export default class Signup extends Component {
+import { Field, reduxForm, SubmissionError } from 'redux-form';
+import { BoostrapInput } from '../components/BootstrapFields';
+import { required, email } from '../components/FieldValidators';
+import { Link } from 'react-router-dom';
+
+class Signup extends Component {
+  submit = values => {};
+
   render() {
+    const { handleSubmit, submitting } = this.props;
+
     return (
       <div className="container">
         <div className="row">
           <div className="col-md-12">
-            <form className="form-horizontal" name="form" noValidate>
+            <form
+              className="form-horizontal"
+              onSubmit={handleSubmit(this.submit)}
+            >
               <fieldset>
                 <legend>Register</legend>
-                {/* <b-input type="email" model="vm.user.email" required="true"></b-input>
-                            <b-input type="password" model="vm.user.password" required="true"></b-input>
-                            <b-input type="password" label="Confirm Password" model="vm.user.confirmPassword" required="true"></b-input> */}
+
+                <Field
+                  name="email"
+                  type="email"
+                  component={BoostrapInput}
+                  label="Email"
+                  validate={[required, email]}
+                />
+                <Field
+                  name="password"
+                  type="password"
+                  component={BoostrapInput}
+                  label="Password"
+                  validate={[required]}
+                />
+                <Field
+                  name="confirmPassword"
+                  type="password"
+                  component={BoostrapInput}
+                  label="Confirm Password"
+                  validate={[required]}
+                />
+
                 <div className="form-group required">
                   <label
                     htmlFor="UserConfirmPassword"
@@ -45,16 +77,20 @@ export default class Signup extends Component {
               </fieldset>
               <br />
               <div>
-                <button className="btn btn-lg btn-success" type="submit">
+                <button
+                  className="btn btn-lg btn-success"
+                  type="submit"
+                  disabled={submitting}
+                >
                   Register
                 </button>
-                <a
+                <Link
                   style={{ marginLeft: '15px' }}
                   className="btn btn-lg btn-info"
-                  href="/login"
+                  to="/login"
                 >
                   Login
-                </a>
+                </Link>
               </div>
               <br />
               <br />
@@ -65,3 +101,10 @@ export default class Signup extends Component {
     );
   }
 }
+
+Signup = reduxForm({
+  // a unique name for the form
+  form: 'Signup'
+})(Signup);
+
+export default Signup;

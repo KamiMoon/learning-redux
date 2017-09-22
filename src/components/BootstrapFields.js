@@ -11,7 +11,12 @@ export const BoostrapInput = field => (
       {field.label}:
     </label>
     <div className="col-lg-10">
-      <input {...field.input} className="form-control input-lg" />
+      <input
+        {...field.input}
+        placeholder={field.placehold}
+        type={field.type}
+        className="form-control input-lg"
+      />
       {field.meta.touched &&
         field.meta.error && <p className="help-block">{field.meta.error}</p>}
     </div>
@@ -31,6 +36,8 @@ export const BoostrapTextArea = field => (
     <div className="col-lg-10">
       <textarea
         {...field.input}
+        placeholder={field.placehold}
+        type={field.type}
         className="form-control input-lg"
         rows={field.rows}
         cols={field.cols}

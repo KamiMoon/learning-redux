@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm, SubmissionError } from 'redux-form';
 
-import BInput from '../components/BInput';
 import { BoostrapInput, BoostrapTextArea } from '../components/BootstrapFields';
 
 import { create } from './redux/blogActions';

@@ -1,78 +1,75 @@
 import React, { Component } from 'react';
 
-import BInput from '../components/BInput';
+import { Field, reduxForm, SubmissionError } from 'redux-form';
+import { BoostrapInput } from '../components/BootstrapFields';
+import { required, email } from '../components/FieldValidators';
+import { Link } from 'react-router-dom';
+
 import AuthService from '../util/AuthService';
 
 //Top level presentaitonal component
-export default class Login extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      email: '',
-      password: ''
-    };
-  }
-
-  handleInputChange = event => {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
-
-    this.setState({
-      [name]: value
-    });
-  };
-
-  onSubmit = event => {
-    event.preventDefault();
-
+class Login extends Component {
+  submit = values => {
     //AuthService.getCurrentUser();
 
     //TODO
-    AuthService.login(this.state.email, this.state.password).then(() => {
-      // AuthService.getUser().then(user => {
-      //     console.log(user);
-      // });
-    });
+    AuthService.login(values.email, values.password).then(
+      () => {
+        // AuthService.getUser().then(user => {
+        //     console.log(user);
+        // });
+      },
+      error => {
+        console.log(error);
+      }
+    );
   };
 
   render() {
+    const { handleSubmit, submitting } = this.props;
+
     return (
       <div>
         <div className="container">
           <div className="row">
             <div className="col-sm-12">
-              <form className="form-horizontal" onSubmit={this.onSubmit}>
+              <form
+                className="form-horizontal"
+                onSubmit={handleSubmit(this.submit)}
+                noValidate
+              >
                 <fieldset>
                   <legend>Login</legend>
-                  <BInput
-                    type="email"
-                    label="Email"
+
+                  <Field
                     name="email"
-                    value={this.state.email}
-                    onChange={this.handleInputChange}
-                    required="true"
+                    type="email"
+                    component={BoostrapInput}
+                    label="Email"
+                    validate={[required, email]}
                   />
-                  <BInput
-                    type="password"
-                    label="Password"
+                  <Field
                     name="password"
-                    value={this.state.password}
-                    onChange={this.handleInputChange}
-                    required="true"
+                    type="password"
+                    component={BoostrapInput}
+                    label="Password"
+                    validate={[required]}
                   />
                   <div>
-                    <button type="submit" className="btn btn-lg btn-primary">
+                    <button
+                      type="submit"
+                      className="btn btn-lg btn-primary"
+                      disabled={submitting}
+                    >
                       Login
                     </button>
-                    <a
+                    <Link
                       style={{ marginLeft: '15px' }}
                       className="btn btn-lg btn-info"
-                      href="/signup"
+                      to="/signup"
                     >
                       Register
-                    </a>
+                    </Link>
                   </div>
                   <br />
                   <br />
@@ -85,3 +82,10 @@ export default class Login extends Component {
     );
   }
 }
+
+Login = reduxForm({
+  // a unique name for the form
+  form: 'Login'
+})(Login);
+
+export default Login;
