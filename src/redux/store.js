@@ -12,8 +12,8 @@ const configureStore = preloadedState => {
     preloadedState,
     applyMiddleware(
       thunkMiddleware, // lets us dispatch() functions
-      api,
-      loggerMiddleware // neat middleware that logs actions
+      api //,
+      //loggerMiddleware // neat middleware that logs actions
     )
   );
 

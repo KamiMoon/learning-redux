@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 
-import { connect } from 'react-redux';
-import { Field, reduxForm, SubmissionError } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 import { BoostrapInput } from '../components/BootstrapFields';
-import { displayErrors } from '../components/Feedback';
+import { displayErrors, success } from '../components/Feedback';
 import { required, email } from '../components/FieldValidators';
 import { Link } from 'react-router-dom';
 
 import AuthService from '../util/AuthService';
 
-//Top level presentaitonal component
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -18,23 +16,16 @@ class Login extends Component {
   }
 
   submit = values => {
-    //AuthService.getCurrentUser();
-
-    console.log(this);
-
-    const { dispatch } = this.props;
-    //TODO
     AuthService.login(values.email, values.password).then(
       () => {
-        // AuthService.getUser().then(user => {
-        //     console.log(user);
-        // });
+        success('Logged In');
+
+        AuthService.getUser().then(user => {
+          this.props.history.push('/profile/' + user._id);
+        });
       },
       error => {
-        console.log(this);
-        const action = displayErrors(error);
-        console.log(action);
-        dispatch(action);
+        displayErrors(error);
       }
     );
   };
@@ -49,7 +40,7 @@ class Login extends Component {
             <div className="col-sm-12">
               <form
                 className="form-horizontal"
-                onSubmit={this.props.handleSubmit(this.submit)}
+                onSubmit={handleSubmit(this.submit)}
                 noValidate
               >
                 <fieldset>
@@ -98,10 +89,7 @@ class Login extends Component {
 }
 
 Login = reduxForm({
-  // a unique name for the form
   form: 'Login'
 })(Login);
-
-//Login = connect()(Login);
 
 export default Login;
