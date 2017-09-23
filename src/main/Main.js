@@ -15,6 +15,7 @@ export default class Main extends Component {
               className="btn btn-lg btn-success"
               href="https://github.com/KamiMoon/angular_full"
               target="_blank"
+              rel="noopener noreferrer"
               role="button"
             >
               <i className="fa fa-github fa-lg" /> GitHub
@@ -98,6 +99,7 @@ export default class Main extends Component {
                   className="btn btn-default btn-lg"
                   href="https://www.preservedfw.com"
                   target="_blank"
+                  rel="noopener noreferrer"
                   role="button"
                 >
                   Preserve US LLC &raquo;
@@ -108,6 +110,7 @@ export default class Main extends Component {
                   className="btn btn-default btn-lg"
                   href="https://github.com/KamiMoon/mean_vo_server"
                   target="_blank"
+                  rel="noopener noreferrer"
                   role="button"
                 >
                   <i className="fa fa-github fa-lg" /> Volunteer Omaha &raquo;
@@ -118,6 +121,7 @@ export default class Main extends Component {
                   className="btn btn-default btn-lg"
                   href="https://github.com/KamiMoon/angular_full"
                   target="_blank"
+                  rel="noopener noreferrer"
                   role="button"
                 >
                   <i className="fa fa-github fa-lg" /> erickizaki.com &raquo;
@@ -128,6 +132,7 @@ export default class Main extends Component {
                   className="btn btn-default btn-lg"
                   href="https://university.mongodb.com/exams/display_certificate?csrfmiddlewaretoken=XibdC5vVH3A3H4rKrVpkmEge5dgNdkuw&license1=946&license2=959&license3=786"
                   target="_blank"
+                  rel="noopener noreferrer"
                   role="button"
                 >
                   Certification &raquo;
@@ -244,6 +249,7 @@ export default class Main extends Component {
                   className="btn btn-default btn-lg"
                   href="https://github.com/KamiMoon/TodoMVC"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <i className="fa fa-github fa-lg" /> jQuery Todo MVC &raquo;
                 </a>
@@ -311,6 +317,7 @@ export default class Main extends Component {
                   role="button"
                   href="https://dazzling-fire-6644.firebaseapp.com/presentations/#/start"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   WebGL Presentation &raquo;
                 </a>

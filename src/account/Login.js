@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
 import { Field, reduxForm, SubmissionError } from 'redux-form';
 import { BoostrapInput } from '../components/BootstrapFields';
+import { displayErrors } from '../components/Feedback';
 import { required, email } from '../components/FieldValidators';
 import { Link } from 'react-router-dom';
 
@@ -9,9 +11,18 @@ import AuthService from '../util/AuthService';
 
 //Top level presentaitonal component
 class Login extends Component {
+  constructor(props) {
+    super(props);
+
+    this.submit = this.submit.bind(this);
+  }
+
   submit = values => {
     //AuthService.getCurrentUser();
 
+    console.log(this);
+
+    const { dispatch } = this.props;
     //TODO
     AuthService.login(values.email, values.password).then(
       () => {
@@ -20,7 +31,10 @@ class Login extends Component {
         // });
       },
       error => {
-        console.log(error);
+        console.log(this);
+        const action = displayErrors(error);
+        console.log(action);
+        dispatch(action);
       }
     );
   };
@@ -35,7 +49,7 @@ class Login extends Component {
             <div className="col-sm-12">
               <form
                 className="form-horizontal"
-                onSubmit={handleSubmit(this.submit)}
+                onSubmit={this.props.handleSubmit(this.submit)}
                 noValidate
               >
                 <fieldset>
@@ -87,5 +101,7 @@ Login = reduxForm({
   // a unique name for the form
   form: 'Login'
 })(Login);
+
+//Login = connect()(Login);
 
 export default Login;

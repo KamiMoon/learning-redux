@@ -1,3 +1,7 @@
+import 'jquery/dist/jquery.js';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.js';
+
 import './index.css';
 import './blog/blog.css';
 import './main/main.css';
@@ -8,6 +12,8 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import LoadingSpinner from './components/LoadingSpinner';
+import Feedback from './components/Feedback';
+
 import CrudView from './crud/CrudView';
 import BlogContainer from './blog/BlogContainer';
 import NavBar from './components/NavBar';
@@ -32,6 +38,8 @@ ReactDOM.render(
 
         <div id="main-container" className="container-fluid">
           <br />
+          <Feedback />
+
           <Route exact path="/" component={Main} />
           <Route path="/blog" component={BlogContainer} />
           <Route exact path="/crud" component={CrudView} />

@@ -24,6 +24,7 @@ export default class Portfolio extends Component {
                     className="btn btn-default btn-lg"
                     href="https://www.preservedfw.com"
                     target="_blank"
+                    rel="noopener noreferrer"
                   >
                     Preserve US &raquo;
                   </a>
@@ -31,16 +32,22 @@ export default class Portfolio extends Component {
                     className="btn btn-default btn-lg"
                     href="https://github.com/KamiMoon/preserveus"
                     target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <i className="fa fa-github fa-lg" /> GitHub &raquo;
                   </a>
                 </div>
               </div>
               <div className="col-lg-6 col-sm-pull-6  col-sm-6">
-                <a href="https://www.preservedfw.com" target="_blank">
+                <a
+                  href="https://www.preservedfw.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <img
                     src="https://res.cloudinary.com/ddovrks1z/image/upload/w_365,h_365,c_fit/preserveus/fbh9iwaastcsbbo3n9t5.png"
                     className="img-responsive"
+                    alt="Preserve US"
                   />
                 </a>
               </div>
@@ -71,6 +78,7 @@ export default class Portfolio extends Component {
                     className="btn btn-default btn-lg"
                     href="https://github.com/KamiMoon/volunteeromaha"
                     target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <i className="fa fa-github fa-lg" /> PHP Version &raquo;
                   </a>
@@ -78,6 +86,7 @@ export default class Portfolio extends Component {
                     className="btn btn-default btn-lg"
                     href="https://github.com/KamiMoon/mean_vo_server"
                     target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <i className="fa fa-github fa-lg" /> MEAN Version &raquo;
                   </a>
@@ -87,10 +96,12 @@ export default class Portfolio extends Component {
                 <a
                   href="hhttps://github.com/KamiMoon/volunteeromaha"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <img
                     src="https://res.cloudinary.com/ddovrks1z/image/upload/w_365,h_365,c_fit/preserveus/eegxivfsjbf1sfxethnu.png"
                     className="img-responsive"
+                    alt="Volunteer Omaha"
                   />
                 </a>
               </div>
@@ -120,6 +131,7 @@ export default class Portfolio extends Component {
                 <img
                   src="https://res.cloudinary.com/ddovrks1z/image/upload/w_365,h_365,c_fit/preserveus/ca2ng0u9t0fh33oso1oo.png"
                   className="img-responsive"
+                  alt="Union Pacific Railroad"
                 />
               </div>
             </div>
