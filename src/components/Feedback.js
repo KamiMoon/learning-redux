@@ -11,26 +11,16 @@ let Feedback = props => (
         <button
           type="button"
           className="close"
-          data-dismiss="alert"
           aria-label="Close"
+          onClick={() => {
+            props.dispatch(hideFeedback());
+          }}
         >
           <span aria-hidden="true">&times;</span>
         </button>
         {props.message}
       </div>
     )}
-    {/* <div className="alert alert-warning alert-dismissible" role="alert">
-      <button
-        type="button"
-        className="close"
-        data-dismiss="alert"
-        aria-label="Close"
-      >
-        <span aria-hidden="true">&times;</span>
-      </button>
-      <strong>Warning!</strong> Better check yourself, you're not looking too
-      good.
-    </div> */}
   </div>
 );
 
