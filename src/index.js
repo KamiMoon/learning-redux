@@ -1,11 +1,13 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.css';
+//import "summernote/dist/summernote.css";
 import './index.css';
 import './blog/blog.css';
 import './main/main.css';
 
 import 'jquery/dist/jquery.js';
 import 'bootstrap/dist/js/bootstrap.js';
+//import "summernote/dist/summernote.js";
 
 import React from 'react';
 import ReactDOM from 'react-dom';

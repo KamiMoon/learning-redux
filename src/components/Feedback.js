@@ -8,7 +8,6 @@ let Feedback = props => (
         className={'alert alert-' + props.messageClass + ' alert-dismissible'}
         role="alert"
       >
-        {props.message}
         <button
           type="button"
           className="close"
@@ -17,8 +16,21 @@ let Feedback = props => (
         >
           <span aria-hidden="true">&times;</span>
         </button>
+        {props.message}
       </div>
     )}
+    {/* <div className="alert alert-warning alert-dismissible" role="alert">
+      <button
+        type="button"
+        className="close"
+        data-dismiss="alert"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <strong>Warning!</strong> Better check yourself, you're not looking too
+      good.
+    </div> */}
   </div>
 );
 
@@ -34,7 +46,7 @@ Feedback = connect(mapStateToProps)(Feedback);
 
 export function displayErrors(err) {
   if (err && err.response && err.response.data && err.response.data.message) {
-    return showFeedback(err.response.data.message, 'error');
+    return showFeedback(err.response.data.message, 'danger');
   }
 }
 
