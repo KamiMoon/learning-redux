@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 import { Route } from 'react-router-dom';
 
 import LoadingSpinner from './components/LoadingSpinner';
-import Feedback from './components/Feedback';
+import Feedback from './components/feedback/Feedback';
 
 import CrudView from './crud/CrudView';
 import BlogContainer from './blog/BlogContainer';

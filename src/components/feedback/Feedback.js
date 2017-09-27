@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import React from 'react';
-import { store } from '../index';
+import { store } from '../../index';
 
 let Feedback = props => (
   <div>

@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 
 import { loadingSpinnerReducer } from '../components/LoadingSpinner';
-import { feedbackReducer } from '../components/Feedback';
+import { feedbackReducer } from '../components/feedback/Feedback';
 import crudReducer from '../crud/redux/crudReducer';
 import blogReducer from '../blog/redux/blogReducer';
 import { userReducer } from '../util/User';
