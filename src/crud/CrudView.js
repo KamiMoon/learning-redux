@@ -5,7 +5,7 @@ import TaskDisplay from './TaskDisplay';
 import TaskToAdd from './TaskToAdd';
 import { addTask, deleteTask, updateTask, getTasks } from './redux/crudActions';
 
-class CrudView extends Component {
+export class CrudView extends Component {
   componentDidMount() {
     this.props.getTasks();
   }
@@ -68,11 +68,9 @@ class CrudView extends Component {
   }
 }
 
-CrudView = connect(state => ({ crud: state.crud }), {
+export default connect(state => ({ crud: state.crud }), {
   addTask,
   deleteTask,
   updateTask,
   getTasks
 })(CrudView);
-
-export default CrudView;

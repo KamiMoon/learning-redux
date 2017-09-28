@@ -3,7 +3,7 @@ import Cookies from 'universal-cookie';
 import UserService from './UserService';
 import { User, setCurrentUser } from './User';
 
-import { store } from '../index';
+import store from '../redux/storeInstance';
 
 class AuthService {
   loadingUserPromise = null;

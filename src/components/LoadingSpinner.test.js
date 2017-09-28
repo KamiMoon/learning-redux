@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { CrudView } from './CrudView';
+import { LoadingSpinner } from './LoadingSpinner';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<CrudView crud={{ tasks: [] }} getTasks={() => {}} />, div);
+  ReactDOM.render(<LoadingSpinner />, div);
 });

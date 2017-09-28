@@ -1,17 +1,15 @@
 import { connect } from 'react-redux';
 import React from 'react';
 
-let LoadingSpinner = props => (
-  <div>{props.showLoadingSpinner && <div className="loadingSpinner" />}</div>
-);
+export function LoadingSpinner(props) {
+  return (
+    <div>{props.showLoadingSpinner && <div className="loadingSpinner" />}</div>
+  );
+}
 
 const mapStateToProps = state => ({
   showLoadingSpinner: state.loadingSpinner.show
 });
-
-LoadingSpinner = connect(mapStateToProps)(LoadingSpinner);
-
-//redux
 
 export const showLoadingSpinner = () => ({
   type: 'SHOW_LOADING_SPINNER'
@@ -35,4 +33,4 @@ export function loadingSpinnerReducer(state = { show: false }, action) {
   return state;
 }
 
-export default LoadingSpinner;
+export default connect(mapStateToProps)(LoadingSpinner);

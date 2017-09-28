@@ -17,11 +17,13 @@ import Contact from './main/Contact';
 import Login from './account/Login';
 import Signup from './account/Signup';
 
-class App extends Component {
+export class App extends Component {
   constructor(props) {
     super(props);
 
-    this.props.history.listen(this.onRouteChange);
+    if (this.props.history) {
+      this.props.history.listen(this.onRouteChange);
+    }
   }
 
   onRouteChange(location, action) {

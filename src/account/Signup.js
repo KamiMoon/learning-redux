@@ -5,7 +5,7 @@ import { BoostrapInput } from '../components/BootstrapFields';
 import { required, email } from '../components/FieldValidators';
 import { Link } from 'react-router-dom';
 
-class Signup extends Component {
+export class Signup extends Component {
   submit = values => {};
 
   render() {
@@ -102,9 +102,7 @@ class Signup extends Component {
   }
 }
 
-Signup = reduxForm({
+export default reduxForm({
   // a unique name for the form
   form: 'Signup'
 })(Signup);
-
-export default Signup;

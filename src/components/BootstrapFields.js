@@ -1,3 +1,5 @@
+//For use with redux-form
+
 import React from 'react';
 
 export const BoostrapInput = field => (

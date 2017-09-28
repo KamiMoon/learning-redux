@@ -7,22 +7,23 @@ export default function PostKeywords(props) {
     <li className="tags" property="keywords">
       <span className="glyphicon glyphicon-bookmark" aria-hidden="true" />
 
-      {keywords.map((keyword, index) => {
-        return (
-          <Link
-            key={index}
-            className={
-              'btn btn-default btn-sm keywords' +
-              (props.searchParams['keywords.text'] === keyword.text
-                ? ' active'
-                : '')
-            }
-            to={`/blogKeyword/${keyword.text}`}
-          >
-            {keyword.text}
-          </Link>
-        );
-      })}
+      {keywords &&
+        keywords.map((keyword, index) => {
+          return (
+            <Link
+              key={index}
+              className={
+                'btn btn-default btn-sm keywords' +
+                (props.searchParams['keywords.text'] === keyword.text
+                  ? ' active'
+                  : '')
+              }
+              to={`/blogKeyword/${keyword.text}`}
+            >
+              {keyword.text}
+            </Link>
+          );
+        })}
     </li>
   );
 }

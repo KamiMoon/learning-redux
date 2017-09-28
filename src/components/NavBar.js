@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import AuthService from '../util/AuthService';
 
-class NavBar extends Component {
+export class NavBar extends Component {
   logout = () => {
     AuthService.logout();
   };
@@ -163,6 +163,4 @@ class NavBar extends Component {
   }
 }
 
-NavBar = connect(state => ({ user: state.user }))(NavBar);
-
-export default NavBar;
+export default connect(state => ({ user: state.user }))(NavBar);

@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { CrudView } from './CrudView';
+import { Feedback } from './Feedback';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<CrudView crud={{ tasks: [] }} getTasks={() => {}} />, div);
+  ReactDOM.render(<Feedback />, div);
 });

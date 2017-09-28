@@ -9,7 +9,7 @@ import PostKeywords from './PostKeywords';
 import AddPost from './AddPost';
 import Post from './Post';
 
-class BlogView extends Component {
+export class BlogView extends Component {
   loadData() {
     console.log('Blog View');
 
@@ -63,6 +63,4 @@ const mapStateToProps = state => {
   };
 };
 
-BlogView = withRouter(connect(mapStateToProps)(BlogView));
-
-export default BlogView;
+export default withRouter(connect(mapStateToProps)(BlogView));

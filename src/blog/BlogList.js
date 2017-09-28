@@ -6,7 +6,7 @@ import * as BlogActions from './redux/blogActions';
 import BlogListPost from './BlogListPost';
 import AddPost from './AddPost';
 
-class BlogList extends Component {
+export class BlogList extends Component {
   loadData() {
     this.props.dispatch(BlogActions.query());
   }
@@ -42,6 +42,4 @@ const mapStateToProps = state => {
   };
 };
 
-BlogList = withRouter(connect(mapStateToProps)(BlogList));
-
-export default BlogList;
+export default withRouter(connect(mapStateToProps)(BlogList));

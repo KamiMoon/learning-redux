@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import React from 'react';
-import { store } from '../../index';
+import store from '../../redux/storeInstance';
 
-let Feedback = props => (
+export const Feedback = props => (
   <div>
     {props.show && (
       <div
@@ -32,8 +32,6 @@ const mapStateToProps = state => {
     message: state.feedback.message
   };
 };
-
-Feedback = connect(mapStateToProps)(Feedback);
 
 export function displayErrors(err) {
   if (err && err.response && err.response.data && err.response.data.message) {
@@ -89,4 +87,4 @@ export function feedbackReducer(state = { show: false }, action) {
   return state;
 }
 
-export default Feedback;
+export default connect(mapStateToProps)(Feedback);

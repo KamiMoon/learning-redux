@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 
 import { Field, reduxForm } from 'redux-form';
 import { BoostrapInput } from '../components/BootstrapFields';
-import { displayErrors, success } from '../components/Feedback';
+import { displayErrors, success } from '../components/feedback/Feedback';
 import { required, email } from '../components/FieldValidators';
 import { Link } from 'react-router-dom';
 
 import AuthService from '../util/AuthService';
 
-class Login extends Component {
+export class Login extends Component {
   constructor(props) {
     super(props);
 
@@ -88,8 +88,6 @@ class Login extends Component {
   }
 }
 
-Login = reduxForm({
+export default reduxForm({
   form: 'Login'
 })(Login);
-
-export default Login;

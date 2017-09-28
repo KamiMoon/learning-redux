@@ -2,12 +2,12 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
 
-import { App } from './App';
+import BlogContainer from './BlogContainer';
 
 it('renders without crashing', () => {
   shallow(
     <MemoryRouter>
-      <App />
+      <BlogContainer match={{ url: 'mock' }} />
     </MemoryRouter>
   );
 });

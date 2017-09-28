@@ -5,8 +5,8 @@ import './index.css';
 import './blog/blog.css';
 import './main/main.css';
 
-import 'jquery/dist/jquery.js';
-import 'bootstrap/dist/js/bootstrap.js';
+//import 'jquery/dist/jquery.js';
+//import 'bootstrap/dist/js/bootstrap.js';
 //import "summernote/dist/summernote.js";
 
 import React from 'react';
@@ -16,9 +16,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import App from './App';
 
 //import registerServiceWorker from './registerServiceWorker';
-import configureStore from './redux/store';
-
-export const store = configureStore();
+import store from './redux/storeInstance';
 
 ReactDOM.render(
   <Provider store={store}>

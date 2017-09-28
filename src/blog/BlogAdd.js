@@ -19,7 +19,7 @@ const validate = values => {
   return errors;
 };
 
-class BlogAdd extends Component {
+export class BlogAdd extends Component {
   submit = values => {
     /*
         return new Promise( ( resolve, reject) => {
@@ -88,13 +88,8 @@ class BlogAdd extends Component {
     );
   }
 }
-
-BlogAdd = reduxForm({
+export default reduxForm({
   // a unique name for the form
   form: 'BlogAdd',
   validate
 })(BlogAdd);
-
-//BlogAdd = connect()(BlogAdd);
-
-export default BlogAdd;
