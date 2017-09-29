@@ -26,8 +26,7 @@ export default function crudReducer(
         ...state,
         isFetching: false,
         didInvalidate: false,
-        tasks: action.tasks,
-        lastUpdated: action.receivedAt
+        tasks: action.tasks
       };
     case ADD_TASK:
       return {

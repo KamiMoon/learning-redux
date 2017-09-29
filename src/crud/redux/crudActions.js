@@ -25,8 +25,7 @@ const requestTasks = makeActionCreator(REQUEST_TASKS);
 function recieveTasks(json) {
   return {
     type: RECIEVE_TASKS,
-    tasks: json,
-    receivedAt: Date.now()
+    tasks: json
   };
 }
 const addTaskAction = makeActionCreator(ADD_TASK, 'task');
